@@ -1,4 +1,4 @@
-export default function getAppointmentsForDay(state, day) {
+const getAppointmentsForDay = (state, day) => {
   const output = []
   for (const eachDay of state.days) {
     if (eachDay.name === day) {
@@ -12,12 +12,18 @@ export default function getAppointmentsForDay(state, day) {
   return output
 }
 
-getInterview(state, interview)
-// {  
-//   "student": "Lydia Miller-Jones",
-//   "interviewer": {  
-//     "id": 1,
-//     "name": "Sylvia Palmer",
-//     "avatar": "https://i.imgur.com/LpaY82x.png"
-//   }
-// }
+const getInterview = (state, interview) => {
+  const output = {}
+  if (!interview) {
+    return null
+  }
+  for (const interviewer in state.interviewers) {
+    if (state.interviewers[interviewer].id === interview.interviewer) {
+      output.student = interview.student
+      output.interviewer = {...state.interviewers[interviewer]}
+      }
+    }
+  return output
+}
+
+export { getAppointmentsForDay, getInterview }
