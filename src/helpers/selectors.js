@@ -1,4 +1,4 @@
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
   const output = []
   for (const eachDay of state.days) {
     if (eachDay.name === day) {
@@ -11,4 +11,13 @@ export function getAppointmentsForDay(state, day) {
   }
   return output
 }
-console.log(getAppointmentsForDay(state, "Monday"))
+
+getInterview(state, interview)
+// {  
+//   "student": "Lydia Miller-Jones",
+//   "interviewer": {  
+//     "id": 1,
+//     "name": "Sylvia Palmer",
+//     "avatar": "https://i.imgur.com/LpaY82x.png"
+//   }
+// }
