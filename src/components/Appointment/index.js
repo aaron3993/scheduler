@@ -21,6 +21,13 @@ export default function Appointment (props) {
     "appointment:last-of-type": props.id === "last"
   });
 
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+  }
+
   return (
     <article className={appointmentClass}>
       <Header time={props.time}/>
@@ -36,7 +43,7 @@ export default function Appointment (props) {
       {mode === CREATE && (
       <Form
         interviewers={props.interviewers}
-        onSave={props.onSave}
+        onSave={() => save(name, interviewer)}
         onCancel={back}/>
       )}
       
