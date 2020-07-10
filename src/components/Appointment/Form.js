@@ -24,7 +24,7 @@ export default function Form (props) {
             value={name}
             onChange={(event) => setName(event.target.value)}
             className="appointment__create-input text--semi-bold"
-            // name="name" (Compass meant to say value="name" which we were also supposed to change?)
+            name="name"
             type="text"
             placeholder="Enter Student Name"
             /*
