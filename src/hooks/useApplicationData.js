@@ -1,4 +1,5 @@
 import { useState, useEffect, useReducer } from "react";
+import { getAppointmentsForDay } from '../helpers/selectors'
 import axios from 'axios'
 
 export default function useApplicationData() {
@@ -30,57 +31,62 @@ export default function useApplicationData() {
     })
   }, [])
 
-  const setSpots = (id, interview) => {
-    let spotsRemaining = {}
-      for (const day of state.days) {
-        if (day.appointments.includes(id)) {
-          spotsRemaining = {
-            ...day,
-            // Check to see if we are adding an interview, if so, then check if an interview already exists, if it does, we are editing it and will not change the spots
-            // remaining, if it doesn't a lready exist, it will subtract from spots remaing, and if we are not adding an interview, we are deleting and will add to spots remaining
-            spots: interview ? state.appointments[id].interview ? day.spots : day.spots-- : day.spots++
-          }
-        }
+  const setSpots = appointments => {
+    let count = 0
+    const tempState = {...state, appointments}
+    const appointmentsToday = getAppointmentsForDay(tempState, state.day)
+    appointmentsToday.forEach(appointment => {
+      if (!appointment.interview) {
+        count++
       }
-    return spotsRemaining
-  }
+    })
+    const days = [...state.days]
+    console.log(state.days)
+    const currentDay = days.map(day => day.name).indexOf(state.day)
+    days[currentDay].spots = count
+    console.log(appointments)
+      return days
+    }
 
-  function bookInterview(id, interview) {
+  function bookInterview(appointmentId, interview) {
     const appointment = {
-      ...state.appointments[id],
+      ...state.appointments[appointmentId],
       interview: { ...interview }
     };
     const appointments = {
       ...state.appointments,
-      [id]: appointment
+      [appointmentId]: appointment
     };
-    const spotsRemaining = setSpots(id, interview)
-    return axios.put(`/api/appointments/${id}`, appointment)
+
+    const days = setSpots(appointments)
+    console.log(days)
+    return axios.put(`/api/appointments/${appointmentId}`, appointment)
     .then(response => {
       setState({
         ...state,
         appointments,
-        spotsRemaining
+        days
       });
     })
   }
 
-  function cancelInterview(id) {
+  function cancelInterview(appointmentId) {
     const appointment = {
-      ...state.appointments[id],
+      ...state.appointments[appointmentId],
       interview: null
     }
     const appointments = {
       ...state.appointments,
-      [id]: appointment
+      [appointmentId]: appointment
     }
-    const spotsRemaining = setSpots(id)
-    return axios.delete(`/api/appointments/${id}`, appointment)
+    const days = setSpots(appointments)
+    // const spotsRemaining = () => setSpots(appointmentId)
+    return axios.delete(`/api/appointments/${appointmentId}`, appointment)
     .then(response => {
       setState({
         ...state,
         appointments,
-        spotsRemaining
+        days
       });
     })
   }
