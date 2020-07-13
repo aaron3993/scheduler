@@ -19,14 +19,33 @@ function reducer(state, action) {
       console.log(state, action)
       return {...state, day: action.day}
     case SET_APPLICATION_DATA:
-      return {...state, days, appointments, interviewers}
+      return {...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers}
     case SET_INTERVIEW: {
-      return /* insert logic */
+    const setDay = day => {
+      let count = 0
+      for (const eachDay of state.days) {
+        if (eachDay.name === day) {
+          for (const appointment of eachDay.appointments) {
+            if (state.appointments[appointment].interview) {
+              count++
+              }
+            }
+          }
+        }
+        return count
+      }
+      const days = state.days.map(day => {
+        if (day === state.day) {
+          day.spots = setDay()
+        }
+        return day
+      })
+      return {...state, appointments, days}
     }
-    // default:
-    //   throw new Error(
-        // `Tried to reduce with unsupported action type: ${action.type}`
-      // );
+    default:
+      throw new Error(
+        `Tried to reduce with unsupported action type: ${action.type}`
+      );
     }
   }
 
@@ -63,38 +82,25 @@ function reducer(state, action) {
       })
     }, [])
 
-    // function bookInterview(id, interview) {
-    //   const appointment = {
-    //     ...state.appointments[id],
-    //     interview: { ...interview }
-    //   };
-    //   const appointments = {
-    //     ...state.appointments,
-    //     [id]: appointment
-    //   };
-      
-    //   let spotsRemaining = {}
-    //   // If an appointment already exists, that means we are editing it and will not decrease the spots remaining
-    //   if (!state.appointments[id].interview) {
-    //     for (const day of state.days) {
-    //       if (day.appointments.includes(id)) {
-    //         spotsRemaining = {
-    //           ...day,
-    //           spots: day.spots--
-    //         }
-    //       }
-    //     }
-    //   }
-    //   return axios.put(`/api/appointments/${id}`, appointment)
-    //   .then(response => {
-    //     // dispatch({ type: SET_INTERVIEW, id, interview });
-    //     // setState({
-    //     //   ...state,
-    //     //   appointments,
-    //     //   spotsRemaining
-    //     // });
-    //   })
-    // }
+    function bookInterview(id, interview) {
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      return axios.put(`/api/appointments/${id}`, appointment)
+      .then(response => {
+        dispatch({ type: SET_INTERVIEW, id, interview });
+        // setState({
+        //   ...state,
+        //   appointments,
+        //   spotsRemaining
+        // });
+      })
+    }
 
     // function cancelInterview(id) {
     //   const appointment = {
