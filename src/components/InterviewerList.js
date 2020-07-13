@@ -23,3 +23,8 @@ const interviewers = props.interviewers.map(interviewer => {
     </section>
   )
 }
+
+InterviewerList.propTypes = {
+  value: PropTypes.number,
+  onChange: PropTypes.func.isRequired
+}
