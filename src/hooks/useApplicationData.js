@@ -1,4 +1,5 @@
 import { useState, useEffect, useReducer } from "react";
+import { setSpots } from "../helpers/selectors"
 import axios from 'axios'
 
 export default function useApplicationData() {
@@ -21,25 +22,15 @@ function reducer(state, action) {
     case SET_APPLICATION_DATA:
       return {...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers}
     case SET_INTERVIEW: {
-    const setDay = day => {
-      let count = 0
-      for (const eachDay of state.days) {
-        if (eachDay.name === day) {
-          for (const appointment of eachDay.appointments) {
-            if (state.appointments[appointment].interview) {
-              count++
-              }
-            }
-          }
-        }
-        return count
-      }
-      const days = state.days.map(day => {
-        if (day === state.day) {
-          day.spots = setDay()
-        }
-        return day
-      })
+      const appointment = {
+        ...state.appointments[action.id],
+        interview: { ...action.interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [action.id]: appointment
+      };
+      const days = setSpots(state, appointments)
       return {...state, appointments, days}
     }
     default:
@@ -82,14 +73,11 @@ function reducer(state, action) {
       })
     }, [])
 
+
     function bookInterview(id, interview) {
       const appointment = {
         ...state.appointments[id],
         interview: { ...interview }
-      };
-      const appointments = {
-        ...state.appointments,
-        [id]: appointment
       };
       return axios.put(`/api/appointments/${id}`, appointment)
       .then(response => {
@@ -132,7 +120,7 @@ function reducer(state, action) {
     return {
       state,
       setDay,
-      // bookInterview,
+      bookInterview,
       // cancelInterview
   }
   }
