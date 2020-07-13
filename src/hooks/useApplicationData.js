@@ -17,9 +17,9 @@ function reducer(state, action) {
   switch (action.type) {
     case SET_DAY:
       console.log(state, action)
-      return {  }
+      return {...state, day: action.day}
     case SET_APPLICATION_DATA:
-      return { /* insert logic */ }
+      return {...state, days, appointments, interviewers}
     case SET_INTERVIEW: {
       return /* insert logic */
     }
@@ -38,7 +38,6 @@ function reducer(state, action) {
   })
   
     const setDay = day => dispatch({ type: SET_DAY, day });
-    // const setDay = day => setState({...state, day });
 
     useEffect(() => {
       const getDaysPromise = axios.get("/api/days")
@@ -55,19 +54,12 @@ function reducer(state, action) {
           // appointments: all[1].data,
           // interviewers: all[2].data
         // }))
-        // Maybe define const for each object first
-        // const days = all[0].data
-        // const appointments = all[1].data
-        // const interviewers = all[2].data
-        // dispatch({ type: SET_APPLICATION_DATA, days, appointments, interviewers });
-      // })
-      // .then(all => {
-        dispatch(prev => ({
+        dispatch({
           type: SET_APPLICATION_DATA,
           days: all[0].data,
           appointments: all[1].data,
           interviewers: all[2].data
-        }))
+        })
       })
     }, [])
 
