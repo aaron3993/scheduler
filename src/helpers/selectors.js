@@ -49,7 +49,6 @@ const setSpots = (state, appointments) => {
   const tempState = {...state, appointments}
   const appointmentsToday = getAppointmentsForDay(tempState, state.day)
   appointmentsToday.forEach(appointment => {
-    console.log(appointment.interview)
     if (!appointment.interview) {
       count++
     }
