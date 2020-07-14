@@ -41,10 +41,8 @@ export default function useApplicationData() {
       }
     })
     const days = [...state.days]
-    console.log(state.days)
     const currentDay = days.map(day => day.name).indexOf(state.day)
     days[currentDay].spots = count
-    console.log(appointments)
       return days
     }
 
@@ -80,7 +78,6 @@ export default function useApplicationData() {
       [appointmentId]: appointment
     }
     const days = setSpots(appointments)
-    // const spotsRemaining = () => setSpots(appointmentId)
     return axios.delete(`/api/appointments/${appointmentId}`, appointment)
     .then(response => {
       setState({
