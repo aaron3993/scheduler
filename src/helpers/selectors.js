@@ -44,4 +44,19 @@ const getInterviewersByDay = (state, day) => {
   return output
 }
 
-export { getAppointmentsForDay, getInterview, getInterviewersByDay }
+const setSpots = (state, appointments) => {
+  let count = 0
+  const tempState = {...state, appointments}
+  const appointmentsToday = getAppointmentsForDay(tempState, state.day)
+  appointmentsToday.forEach(appointment => {
+    if (!appointment.interview) {
+      count++
+    }
+  })
+  const days = [...state.days]
+  const currentDay = days.map(day => day.name).indexOf(state.day)
+  days[currentDay].spots = count
+  return days
+}
+
+export { getAppointmentsForDay, getInterview, getInterviewersByDay, setSpots }
