@@ -11,10 +11,11 @@ const SET_INTERVIEW = "SET_INTERVIEW";
     switch (action.type) {
       case SET_DAY:
         return {...state, day: action.day}
-      case SET_APPLICATION_DATA:
-        return {...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers}
-      case SET_INTERVIEW: {
-        const appointment = {
+        case SET_APPLICATION_DATA:
+          return {...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers}
+          case SET_INTERVIEW: {
+            console.log(action)
+            const appointment = {
           ...state.appointments[action.id],
           interview: { ...action.interview }
         };
@@ -60,24 +61,24 @@ const SET_INTERVIEW = "SET_INTERVIEW";
     })
   }, [])
 
-  function bookInterview(id, interview) {
+  const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
     return axios.put(`/api/appointments/${id}`, appointment)
-    .then(response => {
+    .then(() => {
       dispatch({ type: SET_INTERVIEW, id, interview });
     })
   }
 
-  function cancelInterview(id, interview) {
+  const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
       interview: null
     }
     return axios.delete(`/api/appointments/${id}`, appointment)
-    .then(response => {
+    .then(() => {
       dispatch({ type: SET_INTERVIEW, id, interview: null });
     })
   }

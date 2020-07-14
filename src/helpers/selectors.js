@@ -44,8 +44,7 @@ const getInterviewersByDay = (state, day) => {
   return output
 }
 
-
-function setSpots (state, appointments) {
+const setSpots = (state, appointments) => {
   let count = 0
   const tempState = {...state, appointments}
   const appointmentsToday = getAppointmentsForDay(tempState, state.day)
