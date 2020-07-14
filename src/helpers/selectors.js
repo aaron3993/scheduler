@@ -49,6 +49,7 @@ const setSpots = (state, appointments) => {
   const tempState = {...state, appointments}
   const appointmentsToday = getAppointmentsForDay(tempState, state.day)
   appointmentsToday.forEach(appointment => {
+    console.log(appointment.interview)
     if (!appointment.interview) {
       count++
     }
@@ -56,7 +57,7 @@ const setSpots = (state, appointments) => {
   const days = [...state.days]
   const currentDay = days.map(day => day.name).indexOf(state.day)
   days[currentDay].spots = count
-    return days
-  }
+  return days
+}
 
 export { getAppointmentsForDay, getInterview, getInterviewersByDay, setSpots }
