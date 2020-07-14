@@ -55,7 +55,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
-        <Appointment key="last" time="5pm" />
+        {schedule.length > 0 ? <Appointment key="last" time="5pm" /> : null}
       </section>
     </main>
   );
