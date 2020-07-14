@@ -86,13 +86,13 @@ export default function Appointment (props) {
       )}
       {mode === ERROR_SAVE && (
         <Error
-          message = "Could not create appointment"
+          message="Could not create appointment"
           onClose={() => transition(SHOW)}
         />
       )}
       {mode === ERROR_DELETE && (
         <Error
-          message = "Could not close appointment"
+          message="Could not close appointment"
           onClose={() => transition(SHOW)}
         />
       )}
