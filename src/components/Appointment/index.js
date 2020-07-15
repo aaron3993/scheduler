@@ -30,7 +30,7 @@ export default function Appointment (props) {
     "appointment:last-of-type": props.id === "last"
   });
 
-  function save(name, interviewer) {
+  function save (name, interviewer) {
     const interview = {
       student: name,
       interviewer

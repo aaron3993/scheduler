@@ -1,4 +1,4 @@
-const getAppointmentsForDay = (state, day) => {
+function getAppointmentsForDay (state, day) {
   const output = []
   for (const eachDay of state.days) {
     if (eachDay.name === day) {
@@ -14,7 +14,7 @@ const getAppointmentsForDay = (state, day) => {
   return output
 }
 
-const getInterview = (state, interview) => {
+function getInterview (state, interview) {
   const output = {}
   if (!interview) {
     return null
@@ -28,7 +28,7 @@ const getInterview = (state, interview) => {
   return output
 }
 
-const getInterviewersByDay = (state, day) => {
+function getInterviewersByDay (state, day) {
   const output = []
   for (const eachDay of state.days) {
     if (eachDay.name === day) {
@@ -44,7 +44,7 @@ const getInterviewersByDay = (state, day) => {
   return output
 }
 
-const setSpots = (state, appointments) => {
+function setSpots (state, appointments) {
   let count = 0
   const tempState = {...state, appointments}
   const appointmentsToday = getAppointmentsForDay(tempState, state.day)

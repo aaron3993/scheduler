@@ -1,7 +1,7 @@
 import React from 'react'
 import DayListItem from './DayListItem'
 
-export default function DayList(props) {
+export default function DayList (props) {
   const dayList = props.days.map(day => {
     return (
       <DayListItem
@@ -13,6 +13,7 @@ export default function DayList(props) {
       />
     )
   })
+  
   return (
     <ul>{dayList}</ul>
   )

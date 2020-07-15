@@ -36,7 +36,7 @@ export default function useApplicationData() {
     })
   }, [])
 
-  const bookInterview = (id, interview) => {
+  function bookInterview (id, interview) {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -47,7 +47,7 @@ export default function useApplicationData() {
     })
   }
 
-  const cancelInterview = (id) => {
+  function cancelInterview (id) {
     const appointment = {
       ...state.appointments[id],
       interview: null
