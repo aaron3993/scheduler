@@ -21,13 +21,6 @@ export default function useApplicationData() {
     const getDaysPromise = axios.get("/api/days")
     const getAppointmentsPromise = axios.get("/api/appointments")
     const getInterviewersPromise = axios.get("/api/interviewers")
-    // const getDaysPromise = axios.get(new WebSocket("ws://localhost:8001/api/days"))
-    // const getAppointmentsPromise = axios.get(new WebSocket("ws://localhost:8001/api/appointments"))
-    // const getInterviewersPromise = axios.get(new WebSocket("ws://localhost:8001/api/interviewers"))
-    // getAppointmentsWS = new WebSocket("wss://localhost:8001/api/appointments")
-    // const getAppointmentsPromise = axios.get(getAppointmentsWS)
-    // getInterviewersWS = new WebSocket("wss://localhost:8001/api/interviewers")
-    // const getInterviewersPromise = axios.get(getInterviewersWS)
     Promise.all([
       getDaysPromise,
       getAppointmentsPromise,
