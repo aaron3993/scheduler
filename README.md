@@ -1,5 +1,8 @@
 # Interview Scheduler
 
+## Welcome
+Welcome to my interview scheduler app created using React where you can add, edit, and delete interviews for each day!
+
 ## Setup
 
 Install dependencies with `npm install`.
