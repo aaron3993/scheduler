@@ -1,7 +1,7 @@
 # Interview Scheduler
 
 ## Welcome
-Welcome to my interview scheduler app created using React where you can add, edit, and delete interviews for each day!
+This interview scheduler app allows you to add, edit, and delete interviews for each day of the week by pairing up a student with an interviewer.
 
 ## Setup
 
